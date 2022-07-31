@@ -1,3 +1,4 @@
+
 <table class="table">
   <thead>
     <th>ID</th>
@@ -9,9 +10,20 @@
       <td>{{task.id}}</td>
       <td>{{task.title}}</td>
       <td>
-        <button class="btn btn-info">Detalhes</button>
-        <button class="btn btn-danger">Excluir</button>
+        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailModal" (click)="onSelect(task)">
+          <span class="glyphicon glyphicon-info-sign"></span>
+          Detalhes
+        </button>
+        <button class="btn btn-danger">
+          <span class="glyphicon glyphicon-trash"></span>
+          Excluir
+        </button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<task-detail [task]="selectedTask"></task-detail>
+
+
+
