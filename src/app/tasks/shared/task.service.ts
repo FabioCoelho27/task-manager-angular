@@ -28,7 +28,13 @@ export class TaskService{
     })
     return promise;
   }
-   public getImportantTasks(): Promise<Task[]>{
+
+  public getImportantTasks(): Promise<Task[]>{
     return Promise.resolve(TASKS.slice(0, 3));
-   }
+  }
+
+  public getTask(id: number): Promise<Task | undefined> {
+    return this.getTasks()
+      .then(tasks => tasks.find(task => task.id === id))
+  }
 }
