@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
+
 
 import { Task } from "../shared/task.model";
 import { TaskService } from "../shared/task.service";
@@ -10,7 +11,7 @@ import { TaskService } from "../shared/task.service";
 })
 
 export class TaskDetailComponent implements OnInit{
-  @Input() public task: Task | undefined;
+  public task: Task | undefined;
 
   public constructor(
     private taskService: TaskService,
@@ -19,9 +20,11 @@ export class TaskDetailComponent implements OnInit{
 
   public ngOnInit(){
     this.route.params
-      .subscribe((params: Params) => {
-        this.taskService.getTask(+params['id'])
-        .then(task => this.task = task)
-      })
+    .subscribe((params: Params) => {
+      this.taskService.getTask(+params['id'])
+      .then(task => this.task = task)
+    })
   }
 }
+
+
