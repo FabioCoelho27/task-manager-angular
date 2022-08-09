@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
+import { Location } from "@angular/common";
 
 
 import { Task } from "../shared/task.model";
@@ -15,8 +16,9 @@ export class TaskDetailComponent implements OnInit{
 
   public constructor(
     private taskService: TaskService,
-    private route: ActivatedRoute
-  ){}
+    private route: ActivatedRoute,
+    private location: Location
+  ){ }
 
   public ngOnInit(){
     this.route.params
@@ -24,6 +26,10 @@ export class TaskDetailComponent implements OnInit{
       this.taskService.getTask(+params['id'])
       .then(task => this.task = task)
     })
+  }
+
+  public goBack(){
+    this.location.back();
   }
 }
 

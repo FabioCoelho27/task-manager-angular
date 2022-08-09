@@ -10,7 +10,7 @@
       <td>{{task.id}}</td>
       <td>{{task.title}}</td>
       <td>
-        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailModal" (click)="onSelect(task)">
+        <button [routerLink]="['/tasks', task.id]"  class="btn btn-info">
           <span class="glyphicon glyphicon-info-sign"></span>
           Detalhes
         </button>
