@@ -1,36 +1,21 @@
+// angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
+// components imports
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.componet';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
+
+// services imports
 import { TaskService } from './tasks/shared/task.service';
 
+// modules imports
+import { AppRoutingModule } from './app-routing.module';
 
-const ROUTES = RouterModule.forRoot([
-  {
-    path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent
-  },
-  {
-    path: 'tasks',
-    component: TasksComponent
-  },
-  {
-    path: 'tasks/:id',
-    component: TaskDetailComponent
-  }
-])
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +28,7 @@ const ROUTES = RouterModule.forRoot([
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ROUTES
+    AppRoutingModule
   ],
   providers: [
     TaskService
