@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 import { Task } from "./task.model";
@@ -16,8 +17,8 @@ const TASKS: Array<Task> = [
 @Injectable()
 
 export class TaskService{
+  public constructor(private http: HttpClient) {}
   
-
   public getTasks(): Promise<Task[]>{
     let promise = new Promise<any>(function(resolve, reject) {
       if(TASKS.length > 0){
