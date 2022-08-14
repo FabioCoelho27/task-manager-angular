@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
 
+import { Observable } from "rxjs";
+import { switchMap } from 'rxjs/operators';
 
 import { Task } from "../shared/task.model";
 import { TaskService } from "../shared/task.service";
@@ -22,10 +24,11 @@ export class TaskDetailComponent implements OnInit{
 
   public ngOnInit(){
     this.route.params
-    .subscribe((params: Params) => {
-      this.taskService.getTask(+params['id'])
-      .then(task => this.task = task)
-    })
+    .pipe(switchMap((params: Params) =>  this.taskService.getTask(+params['id'])))
+    .subscribe(task => {
+      this.task = task
+      })
+    
   }
 
   public goBack(){
