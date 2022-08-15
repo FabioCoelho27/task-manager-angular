@@ -1,60 +1,50 @@
-import {HttpHeaderResponse, HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
+import {HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
-import { Observable, throwError } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 
 import { Task } from "./task.model";
 
 @Injectable()
-
-export class TaskService{
-  public tasksUrl = "api/tasks"
+export class TaskService {
+  public tasksUrl = "api/tasks";
 
   public constructor(private http: HttpClient) {}
-  
-  public getTasks(): Observable<Task[] | undefined>{
+
+  public getTasks(): Observable<Task[]>{
     return this.http.get(this.tasksUrl)
-    .pipe(map((response: any) => response as Task[])) 
-    .pipe(catchError(this.handleErrors));
+    .pipe(map((response: any) => response as Task[]))
+    .pipe(catchError((error) => this.handleErrors(error)));
   }
-  
-  public getImportantTasks(): Observable<Task[] | undefined>{
+
+  public getImportantTasks(): Observable<Task[]>{
     return this.getTasks()
-    .pipe(map(tasks => { 
-      if(tasks) {
-        return tasks.slice(0,3)
-      }
-      return tasks;
-    })
-    )
-    .pipe(catchError(this.handleErrors));
+    .pipe(
+      map(tasks => {
+        return tasks ? tasks.slice(0, 3) : tasks;
+      }),
+      catchError((error) => this.handleErrors(error))
+    );
   }
-  public getTask(id: number): Observable<Task | undefined> {
+  public getTask(id: number): Observable<Task> {
     let url = `${this.tasksUrl}/${id}`
     return this.http.get(url)
-    .pipe(map((response: any) => response as Task)) 
-    .pipe(catchError(this.handleErrors));
+    .pipe(catchError((error) => this.handleErrors(error)));
   }
 
   public updateTask(task: Task): Observable<any> {
-    let url = `${this.tasksUrl}/${task.id}`
-    let body = JSON.stringify(task)
-    let headers = new HttpHeaders({'Content-type': 'application/json'})
+    let url = `${this.tasksUrl}/${task.id}`;
+    let body = JSON.stringify(task);
+    let headers = new HttpHeaders({'Content-type': 'application/json'});
 
-    return this.http.put(url,body, {headers: headers})
-      .pipe(
-        catchError(this.handleErrors),
-        map((response) => {
-        console.log(response);
-        return response;
-       })
-      )
+    return this.http.put(url, body, { headers: headers })
+      .pipe(catchError((error) => this.handleErrors(error)))
   }
 
-  private handleErrors(handleErros: Response) {
-    console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", Error)
-    return throwError(Error || 'server Error');
+  private handleErrors(handleError: any) {
+    console.error("Salvando o Erro num arquivo de log - Detalhes do erro => ", handleError);
+    return of(handleError);
   }
 }

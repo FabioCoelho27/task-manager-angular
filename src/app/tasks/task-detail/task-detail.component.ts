@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
 
-import { Observable } from "rxjs";
 import { switchMap } from 'rxjs/operators';
 
 import { Task } from "../shared/task.model";
@@ -14,22 +13,29 @@ import { TaskService } from "../shared/task.service";
 })
 
 export class TaskDetailComponent implements OnInit{
-  public task: Task | undefined;
+  public task: Task;
 
   public constructor(
     private taskService: TaskService,
     private route: ActivatedRoute,
     private location: Location
-  ){ }
+  ){
+    this.task = {};
+  }
 
-  public ngOnInit(){
+  public ngOnInit(): void {
     this.route.params
-    .pipe(switchMap((params: Params) =>  this.taskService.getTask(+params['id'])))
-    .subscribe(
-      task => this.task = task,
-      Error => alert("Ocorreu um erro no servidor, por favor tente mais tarde.")
+    .pipe(
+      switchMap(
+        (params: Params) => this.taskService.getTask(+params['id'])
       )
-    
+    )
+    .subscribe({
+      next: (task) => {
+        this.task = task;
+      },
+      error: () => alert("Ocorreu um erro no servidor, por favor tente mais tarde.")
+    })
   }
 
   public goBack(){
@@ -37,14 +43,18 @@ export class TaskDetailComponent implements OnInit{
   }
 
   public updateTask(){
-    if(this.task!.title){
-      alert("A tarefa deve ter um título")
-    }else{
-      this.taskService.updateTask(this.task!)
-      .subscribe(
-        () => alert("Tarefa atualizada com sucesso"),
-        () => alert("Occoreu um erro no servidor, só entro no segundo alert")
-      )
+    if(!this.task.title) {
+      alert("A tarefa deve ter um título.");
+    } else {
+      this.taskService.updateTask(this.task)
+      .subscribe({
+        next: (res) => {
+          console.log('resposta: \n', res);
+          console.log('this.task: \n', this.task);
+          alert("Tarefa atualizada com sucesso");
+        },
+        error: () => alert("Occoreu um erro no servidor, só entro no segundo alert")
+      })
     }
   }
 }
