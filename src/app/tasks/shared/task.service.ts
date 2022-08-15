@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import {HttpHeaderResponse, HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 import { Observable, throwError } from "rxjs";
@@ -37,6 +37,22 @@ export class TaskService{
     .pipe(map((response: any) => response as Task)) 
     .pipe(catchError(this.handleErrors));
   }
+
+  public updateTask(task: Task): Observable<any> {
+    let url = `${this.tasksUrl}/${task.id}`
+    let body = JSON.stringify(task)
+    let headers = new HttpHeaders({'Content-type': 'application/json'})
+
+    return this.http.put(url,body, {headers: headers})
+      .pipe(
+        catchError(this.handleErrors),
+        map((response) => {
+        console.log(response);
+        return response;
+       })
+      )
+  }
+
   private handleErrors(handleErros: Response) {
     console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", Error)
     return throwError(Error || 'server Error');
