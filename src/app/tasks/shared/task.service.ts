@@ -1,10 +1,11 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+
+import { Observable, throwError } from "rxjs";
 import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { Task } from "./task.model";
-
 
 @Injectable()
 
@@ -16,8 +17,9 @@ export class TaskService{
   public getTasks(): Observable<Task[] | undefined>{
     return this.http.get(this.tasksUrl)
     .pipe(map((response: any) => response as Task[])) 
+    .pipe(catchError(this.handleErrors));
   }
-
+  
   public getImportantTasks(): Observable<Task[] | undefined>{
     return this.getTasks()
     .pipe(map(tasks => { 
@@ -27,10 +29,16 @@ export class TaskService{
       return tasks;
     })
     )
+    .pipe(catchError(this.handleErrors));
   }
   public getTask(id: number): Observable<Task | undefined> {
     let url = `${this.tasksUrl}/${id}`
     return this.http.get(url)
     .pipe(map((response: any) => response as Task)) 
+    .pipe(catchError(this.handleErrors));
+  }
+  private handleErrors(handleErros: Response) {
+    console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", Error)
+    return throwError(Error || 'server Error');
   }
 }
