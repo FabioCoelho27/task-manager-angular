@@ -1,5 +1,34 @@
-<h1>Detalhes da tarefa: {{ task?.title }}</h1>
-<div>
+<h1 class="page-header">Detalhes da tarefa: {{ task?.title }}</h1>
+
+<form [formGroup]="reactiveTaskForm">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="title" class="control-label">Título</label>
+      <input type="text" formControlName="title" id="title" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="deadline" class="control-label">Prazo de Entrega</label>
+      <input type="text" formControlName="deadline" id="deadline" class="form-control">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="done" class="control-label">Situação</label>
+      <input type="text" formControlName="done" id="done" class="form-control">
+      <!-- <select class="form-control" id="done">
+        <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
+      </select> -->
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="description" class="control-label">Descrição</label>
+        <textarea formControlName="description" id="description" class="form-control" rows="4"></textarea>
+      </div>
+    </div>
+  </div>
+  <pre>{{reactiveTaskForm.value | json}}</pre>
+</form>
+
+
+<!-- <div>
   <div class="mb-3" *ngIf="task">
     <label for="title" class="form-label">Título</label>
     <input [(ngModel)]="task!.title" class="form-control" type="text">
@@ -9,9 +38,9 @@
 </div>
 
 
-<!-- Modal -->
+ Modal 
 <pre id="exemplo">
   teste asfdfdfdfadfdfdfdf
   qaddfdfapoi ioudiofuopu opi
   paoisuio poiuiu poiuy qwert 
-</pre>
+</pre> --> 
