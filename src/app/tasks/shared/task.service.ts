@@ -31,7 +31,7 @@ export class TaskService{
     )
     .pipe(catchError(this.handleErrors));
   }
-  public getTask(id: number): Observable<Task | undefined> {
+  public getById(id: number): Observable<Task | undefined> {
     let url = `${this.tasksUrl}/${id}`
     return this.http.get(url)
     .pipe(map((response: any) => response as Task)) 
