@@ -1,7 +1,7 @@
 // angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http"
 
 // components imports
@@ -35,9 +35,10 @@ import * as $ from 'jquery';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(InMemoryTaskDataService)
+    InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
   ],
   providers: [
     TaskService
