@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
 
@@ -13,7 +13,7 @@ import { TaskService } from "../shared/task.service";
   templateUrl: './task-detail.component.html'
 })
 
-export class TaskDetailComponent implements OnInit{
+export class TaskDetailComponent implements OnInit, AfterViewInit{
   public task: Task | undefined;
 
   public constructor(
@@ -21,6 +21,7 @@ export class TaskDetailComponent implements OnInit{
     private route: ActivatedRoute,
     private location: Location
   ){ }
+
 
   public ngOnInit(){
     this.route.params
@@ -30,6 +31,9 @@ export class TaskDetailComponent implements OnInit{
       Error => alert("Ocorreu um erro no servidor, por favor tente mais tarde.")
       )
     
+  }
+  ngAfterViewInit() {
+    $("#exemplo").fadeOut(9999)
   }
 
   public goBack(){
