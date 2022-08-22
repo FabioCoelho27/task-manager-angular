@@ -70,11 +70,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
     this.location.back();
   }
 
-  public updateTask(){
+  public update(){
     if(this.task!.title){
       alert("A tarefa deve ter um título")
     }else{
-      this.taskService.updateTask(this.task!)
+      this.taskService.update(this.task!)
       .subscribe(
         () => alert("Tarefa atualizada com sucesso"),
         () => alert("Occoreu um erro no servidor, só entro no segundo alert")

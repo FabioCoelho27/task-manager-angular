@@ -11,17 +11,18 @@ import { Task } from "./task.model";
 
 export class TaskService{
   public tasksUrl = "api/tasks"
+  public headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   public constructor(private http: HttpClient) {}
   
-  public getTasks(): Observable<Task[] | undefined>{
+  public getAll(): Observable<Task[] | undefined>{
     return this.http.get(this.tasksUrl)
     .pipe(map((response: any) => response as Task[])) 
     .pipe(catchError(this.handleErrors));
   }
   
-  public getImportantTasks(): Observable<Task[] | undefined>{
-    return this.getTasks()
+  public getImportant(): Observable<Task[] | undefined>{
+    return this.getAll()
     .pipe(map(tasks => { 
       if(tasks) {
         return tasks.slice(0,3)
@@ -38,12 +39,11 @@ export class TaskService{
     .pipe(catchError(this.handleErrors));
   }
 
-  public createTask(task: Task): Observable<Task> {
+  public create(task: Task): Observable<Task> {
     let url = this.tasksUrl;
     let body = JSON.stringify(task);
-    let headers = new HttpHeaders({'Content-Type': 'application/json'})
 
-    return this.http.post(url, body, { headers: headers })
+    return this.http.post(url, body, { headers: this.headers })
     .pipe(
       catchError(this.handleErrors),
       map((response: any) => response as Task)
@@ -51,12 +51,11 @@ export class TaskService{
   }
   
 
-  public updateTask(task: Task): Observable<any> {
+  public update(task: Task): Observable<any> {
     let url = `${this.tasksUrl}/${task.id}`
     let body = JSON.stringify(task)
-    let headers = new HttpHeaders({'Content-Type': 'application/json'})
 
-    return this.http.put(url,body, {headers: headers})
+    return this.http.put(url,body, {headers: this.headers})
       .pipe(
         catchError(this.handleErrors),
         map((response) => {
@@ -66,11 +65,10 @@ export class TaskService{
       )
   }
 
-  public deleteTask(id: number): Observable<null> {
+  public delete(id: number): Observable<null> {
     let url = `${this.tasksUrl}/${id}`;
-    let headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-    return this.http.delete(url, { headers: headers})
+    return this.http.delete(url, { headers: this.headers})
       .pipe(
         catchError(this.handleErrors),
         map(() => null!)
