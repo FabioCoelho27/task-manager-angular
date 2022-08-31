@@ -74,6 +74,15 @@ export class TaskService{
         map(() => null!)
       )
   }
+  public searchByTitle(term: string): Observable<Task[]> {
+    let url = `${this.tasksUrl}?title=${term}`;
+
+    return this.http.get(url)
+      .pipe(
+        catchError(this.handleErrors),
+        map((response: any) => response.json().data as Task[])
+      )
+  }
 
   private handleErrors(handleErros: Response) {
     console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", Error)
