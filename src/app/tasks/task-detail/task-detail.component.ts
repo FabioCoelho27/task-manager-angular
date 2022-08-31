@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
-import  { FormGroup, FormControl } from "@angular/forms";
+import  { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 
 import { from, Observable } from "rxjs";
 import { switchMap } from 'rxjs/operators';
@@ -26,14 +26,15 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
   public constructor(
     private taskService: TaskService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private formBuilder: FormBuilder
   ){ 
-    this.reactiveTaskForm = new FormGroup({
-      id: new FormControl(null),
-      title: new FormControl(null),
-      deadline: new FormControl(null),
-      done: new FormControl(null),
-      description: new FormControl(null)
+    this.reactiveTaskForm = this.formBuilder.group({
+      id: [null],
+      title: [null],
+      deadline: [null],
+      done: [null],
+      description: [null]
     })
   }
 
