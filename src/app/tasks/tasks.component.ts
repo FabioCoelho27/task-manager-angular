@@ -38,10 +38,11 @@ export class TasksComponent implements OnInit{
       this.taskService.create(this.newTask)
       .subscribe(
         (task) =>{
-          this.tasks?.push(task);
-          this.newTask = new Task(null!, '') //zerar o campo depois de criar uma nova tarefa.
+          console.log("Passou")
+          // this.tasks?.push(task);
+          // this.newTask = new Task(null!, '') //zerar o campo depois de criar uma nova tarefa.
         },
-        () => alert("Ocorreu um erro no servidor.")
+        (erro) => alert("erro: " +erro)
       )
     }
   }
