@@ -3,9 +3,12 @@ import { Injectable } from "@angular/core";
 import { InMemoryDbService, RequestInfo } from "angular-in-memory-web-api";
 import { Observable } from "rxjs";
 
-@Injectable()
-
+@Injectable({
+  providedIn: 'root'
+})
 export class InMemoryTaskDataService implements InMemoryDbService{
+
+constructor() { }
   public createDb(){
     let tasks = [
       { id: 1, title: 'Training English later wake up'},

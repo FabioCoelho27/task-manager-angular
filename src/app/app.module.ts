@@ -11,6 +11,9 @@ import { NavbarComponent } from './navbar/navbar.componet';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TaskSearchComponent } from './navbar/task-search/task-search.component';
+// Datepicker module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // services imports
 import { TaskService } from './tasks/shared/task.service';
@@ -41,6 +44,8 @@ import * as $ from 'jquery';
     AppRoutingModule,
     HttpClientModule,
     InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     TaskService

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
-import  { FormGroup, FormControl, FormBuilder } from "@angular/forms";
+import  { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from "@angular/forms";
 
 import { from, Observable } from "rxjs";
 import { switchMap } from 'rxjs/operators';
@@ -18,10 +18,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
   public reactiveTaskForm: FormGroup;
 
   public task: Task | undefined;
-  public taskDoneOptions: Array<any> = [
-    {value: false, text: "Pendente"},
-    {value: true, text: "Feita"}
-  ]
+  public taskDoneOptions: Array<any>;;
 
   public constructor(
     private taskService: TaskService,
@@ -29,10 +26,14 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
     private location: Location,
     private formBuilder: FormBuilder
   ){ 
+    this.taskDoneOptions = [{value: false, text: "Pendente"},
+    {value: true, text: "Feita"}];
+
+
     this.reactiveTaskForm = this.formBuilder.group({
       id: [null],
-      title: [null],
-      deadline: [null],
+      title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      deadline: [null, Validators.required],
       done: [null],
       description: [null]
     })
@@ -64,7 +65,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    $("#exemplo").fadeOut(9999)
+    
   }
 
   public goBack(){
@@ -81,6 +82,28 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
         () => alert("Occoreu um erro no servidor, só entro no segundo alert")
       )
     }
+  }
+
+  // form errors methods
+  public fieldClassForErrorOrSuccess(fieldName: string){
+    return {
+      "has-error": this.showFieldError(this.reactiveTaskForm.get(fieldName)),
+      "has-success": this.reactiveTaskForm.get(fieldName)?.valid
+    }
+  }
+  public iconClassErrorOrSuccess(fieldName: string){
+    return {
+      "bi bi-x": this.showFieldError(this.reactiveTaskForm.get(fieldName)),
+      "bi-check2": this.reactiveTaskForm.get(fieldName)?.valid
+    }
+  }
+
+  public showFieldError(field: AbstractControl<any, any> | null): boolean{
+    return field!.invalid && (field!.touched || field!.dirty);
+  }
+
+  public getField(fieldName: string){
+    return this.reactiveTaskForm.get(fieldName);
   }
 }
 

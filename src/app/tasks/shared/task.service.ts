@@ -39,17 +39,15 @@ export class TaskService{
     .pipe(catchError(this.handleErrors));
   }
 
-  public create(task: Task) {
+  public create(task: Task): Observable<Task> {
     let url = this.tasksUrl;
-    let body = JSON.stringify(task);
 
-    return this.http.post(url, body, { headers: this.headers })
-    // .pipe(
-    //   catchError(this.handleErrors),
-    //   map((response: any) => response as Task)
-    // )
+    return this.http.post(url, task)
+      .pipe(
+        catchError(this.handleErrors),
+        map((response: any) => response as Task)
+      )
   }
-  
 
   public update(task: Task): Observable<any> {
     let url = `${this.tasksUrl}/${task.id}`
