@@ -8,6 +8,7 @@ import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.componet';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TaskSearchComponent } from './navbar/task-search/task-search.component';
@@ -32,6 +33,7 @@ import * as $ from 'jquery';
     AppComponent,
     DashboardComponent,
     NavbarComponent,
+    SignUpFormComponent,
     TasksComponent,
     TaskDetailComponent,
     TaskSearchComponent
