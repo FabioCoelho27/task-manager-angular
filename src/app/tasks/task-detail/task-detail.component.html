@@ -1,17 +1,17 @@
 <h1 class="page-header">Detalhes da tarefa: {{ task?.title }}</h1>
 
-<form [formGroup]="reactiveTaskForm">
+<form [formGroup]="form">
   <div class="row">
-    <div class="form-group col-md-6 has-feedback"[ngClass]="fieldClassForErrorOrSuccess('title')">
+    <div class="form-group col-md-6 has-feedback"[ngClass]="formUtils.fieldClassForErrorOrSuccess('title')">
       <label for="title" class="control-label">Título</label>
       <input  [(ngModel)]="task!.title" type="text" formControlName="title" id="title" class="form-control">
-      <span class="form-control-feedback" ngClass="iconClassErrorOrSuccess('title')" style="margin-right:20px" ></span>
+      <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('title')" style="margin-right:20px" ></span>
 
 
-      <div *ngIf="showFieldError(getField('title'))" class="text-danger">
-        <div *ngIf="getField('title')?.errors">O título é obrigatório</div>
-        <div *ngIf="getField('title')?.errors">O título deve ter no minímo 3 caracteres</div>
-        <div *ngIf="getField('title')?.errors">O título deve ter no máximo 255 caracteres</div>
+      <div *ngIf="formUtils.showFieldError('title')" class="text-danger">
+        <div *ngIf="form.get('title')?.errors">O título é obrigatório</div>
+        <div *ngIf="form.get('title')?.errors">O título deve ter no minímo 3 caracteres</div>
+        <div *ngIf="form.get('title')?.errors">O título deve ter no máximo 255 caracteres</div>
       </div>
     </div>
     <div class="form-group col-md-3">
@@ -34,8 +34,8 @@
 
 
 
-  <pre>{{reactiveTaskForm.value | json}}</pre>
-  <pre>{{reactiveTaskForm.get('title')?.errors| json}}</pre>
+  <pre>{{form.value | json}}</pre>
+  <pre>{{form.get('title')?.errors| json}}</pre>
 
 </form>
 
