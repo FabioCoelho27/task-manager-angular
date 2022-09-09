@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpResponse } from "@angular/common/http";
 
-import { Observable, throwError } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 
 import { User } from "./user.model";
 
@@ -13,7 +13,8 @@ export class AuthService{
   public constructor(){}
 
   public signUp(user: User){
-
+    return this.tokenService.registerAccount(user as any)
+    .pipe(catchError(this.handleErrors))
   }
   public signIn(uid: string, password:string){
 
