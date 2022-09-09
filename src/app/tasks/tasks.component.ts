@@ -17,7 +17,7 @@ export class TasksComponent implements OnInit{
 
   // public selectedTask!: Task
   //private taskService: TaskService
-  
+
   public constructor(private taskService: TaskService){
     this.newTask = new Task(null!, '')
   }
@@ -31,16 +31,20 @@ export class TasksComponent implements OnInit{
   }
 
   public create(){
+    var max = this.tasks?.reduce(function (prev, current) {
+      return (prev.id > current.id) ? prev : current
+    })
+
     this.newTask.title = this.newTask.title.trim();
-    if(!this.newTask.title){
+      if(!this.newTask.title){
       alert("A tarefa deve ter um título")
     }else{
       this.taskService.create(this.newTask)
       .subscribe(
         (task) =>{
           console.log("Passou")
-          // this.tasks?.push(task);
-          // this.newTask = new Task(null!, '') //zerar o campo depois de criar uma nova tarefa.
+          this.tasks?.push(task);
+          this.newTask = new Task(null!, '') //zerar o campo depois de criar uma nova tarefa.
         },
         (erro) => alert("erro: " +erro)
       )

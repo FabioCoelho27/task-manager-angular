@@ -1,14 +1,22 @@
 <h1 class="page-header">Detalhes da tarefa: {{ task?.title }}</h1>
 
-<form [formGroup]="reactiveTaskForm">
+<form [formGroup]="form">
   <div class="row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6 has-feedback"[ngClass]="formUtils.fieldClassForErrorOrSuccess('title')">
       <label for="title" class="control-label">Título</label>
-      <input type="text" formControlName="title" id="title" class="form-control">
+      <input  [(ngModel)]="task!.title" type="text" formControlName="title" id="title" class="form-control">
+      <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('title')" style="margin-right:20px" ></span>
+
+
+      <div *ngIf="formUtils.showFieldError('title')" class="text-danger">
+        <div *ngIf="form.get('title')?.errors">O título é obrigatório</div>
+        <div *ngIf="form.get('title')?.errors">O título deve ter no minímo 3 caracteres</div>
+        <div *ngIf="form.get('title')?.errors">O título deve ter no máximo 255 caracteres</div>
+      </div>
     </div>
     <div class="form-group col-md-3">
       <label for="deadline" class="control-label">Prazo de Entrega</label>
-      <input type="text" formControlName="deadline" id="deadline" class="form-control">
+      <input type="text" placeholder="Datepicker" formControlName="deadline" id="deadline" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true }" >
     </div>
     <div class="form-group col-md-3">
       <label for="done" class="control-label">Situação</label>
@@ -23,17 +31,22 @@
       </div>
     </div>
   </div>
-  <pre>{{reactiveTaskForm.value | json}}</pre>
+
+
+
+  <pre>{{form.value | json}}</pre>
+  <pre>{{form.get('title')?.errors| json}}</pre>
+
 </form>
 
 
-<!-- <div>
+<div>
   <div class="mb-3" *ngIf="task">
     <label for="title" class="form-label">Título</label>
     <input [(ngModel)]="task!.title" class="form-control" type="text">
   </div>
   <button class="btn btn-danger" (click)="goBack()">Voltar</button>
-  <button type="submit" class="btn btn-success" (click)="updateTask()">Atualizar</button>
+  <!-- <button type="submit" class="btn btn-success" (click)="updateTask()">Atualizar</button> -->
 </div>
 
 
@@ -42,4 +55,4 @@
   teste asfdfdfdfadfdfdfdf
   qaddfdfapoi ioudiofuopu opi
   paoisuio poiuiu poiuy qwert 
-</pre> --> 
+</pre> 

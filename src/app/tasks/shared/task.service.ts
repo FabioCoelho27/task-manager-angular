@@ -10,7 +10,7 @@ import { Task } from "./task.model";
 @Injectable()
 
 export class TaskService{
-  public tasksUrl = "api/tasks"
+  public tasksUrl = "http://api.task-manager.test:3000/tasks";
   public headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   public constructor(private http: HttpClient) {}
@@ -39,17 +39,15 @@ export class TaskService{
     .pipe(catchError(this.handleErrors));
   }
 
-  public create(task: Task) {
+  public create(task: Task): Observable<Task> {
     let url = this.tasksUrl;
-    let body = JSON.stringify(task);
 
-    return this.http.post(url, body, { headers: this.headers })
-    // .pipe(
-    //   catchError(this.handleErrors),
-    //   map((response: any) => response as Task)
-    // )
+    return this.http.post(url, task)
+      .pipe(
+        catchError(this.handleErrors),
+        map((response: any) => response as Task)
+      )
   }
-  
 
   public update(task: Task): Observable<any> {
     let url = `${this.tasksUrl}/${task.id}`

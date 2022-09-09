@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from "@angular/common";
-import  { FormGroup, FormControl, FormBuilder } from "@angular/forms";
+import  { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from "@angular/forms";
 
 import { from, Observable } from "rxjs";
 import { switchMap } from 'rxjs/operators';
 
+import { FormUtils } from "src/app/shared/form.utils";
 import { Task } from "../shared/task.model";
 import { TaskService } from "../shared/task.service";
 
@@ -15,13 +16,11 @@ import { TaskService } from "../shared/task.service";
 })
 
 export class TaskDetailComponent implements OnInit, AfterViewInit{
-  public reactiveTaskForm: FormGroup;
 
+  public form: FormGroup;
   public task: Task | undefined;
-  public taskDoneOptions: Array<any> = [
-    {value: false, text: "Pendente"},
-    {value: true, text: "Feita"}
-  ]
+  public taskDoneOptions: Array<any>;
+  public formUtils: FormUtils
 
   public constructor(
     private taskService: TaskService,
@@ -29,13 +28,18 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
     private location: Location,
     private formBuilder: FormBuilder
   ){ 
-    this.reactiveTaskForm = this.formBuilder.group({
+    this.taskDoneOptions = [{value: false, text: "Pendente"},
+    {value: true, text: "Feita"}];
+
+
+    this.form = this.formBuilder.group({
       id: [null],
-      title: [null],
-      deadline: [null],
+      title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
+      deadline: [null, Validators.required],
       done: [null],
       description: [null]
     })
+    this.formUtils = new FormUtils(this.form)
   }
 
 
@@ -60,11 +64,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
       description: task!.description || null,
       done: task!.done || null
     }
-    this.reactiveTaskForm.setValue(formModel);
+    this.form.setValue(formModel);
   }
 
   ngAfterViewInit() {
-    $("#exemplo").fadeOut(9999)
+    
   }
 
   public goBack(){
@@ -82,6 +86,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
       )
     }
   }
+
 }
 
 

@@ -1,0 +1,56 @@
+<h1 class="page-header">Faça o seu cadastro</h1>
+<form [formGroup]="form" (ngSubmit)="signUpUser()">
+  <div class="mb-3 has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('name')">
+    <label for="name" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="name" formControlName="name">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('name')" style="margin-right:20px" ></span>
+
+
+    <div *ngIf="formUtils.showFieldError('name')" class="text-danger">
+      <div *ngIf="form.get('name')?.errors">O nome é obrigatório</div>
+      <div *ngIf="form.get('name')?.errors">O nome deve ter no minímo 5 caracteres</div>
+      <div *ngIf="form.get('name')?.errors">O título deve ter no máximo 100 caracteres</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('email')" style="margin-right:20px" ></span>
+
+
+    <div *ngIf="formUtils.showFieldError('email')" class="text-danger">
+      <div *ngIf="form.get('email')?.errors">O email é obrigatório</div>
+      <div *ngIf="form.get('email')?.errors">O email digitado é inválido</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="password" formControlName="password">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('email')" style="margin-right:20px" ></span>
+
+    <div *ngIf="formUtils.showFieldError('password')" class="text-danger">
+      <div *ngIf="form.get('password')?.errors">A senha é obrigatória</div>
+      <div *ngIf="form.get('password')?.errors">A senha deve ter no minímo 6 caracteres</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password_confirmation" class="form-label">Confirmação de Senha</label>
+    <input type="password" class="form-control" id="password_confirmation" formControlName="passwordConfirmation">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('email')" style="margin-right:20px" ></span>
+
+
+    <div *ngIf="formUtils.showFieldError('passwordConfirmation')" class="text-danger">
+      <div *ngIf="form.get('passwordConfirmation')?.errors">A Confirmação da senha é obrigatória</div>
+      <div *ngIf="form.get('passwordConfirmation')?.errors">A senha deve ter no minímo 6 caracteres</div>
+    </div>
+  </div>
+
+  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Criar Conta</button>
+</form>

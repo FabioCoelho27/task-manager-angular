@@ -8,27 +8,37 @@ import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.componet';
+import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
 import { TaskSearchComponent } from './navbar/task-search/task-search.component';
+// Datepicker module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // services imports
+import { AuthService } from './shared/auth.service';
 import { TaskService } from './tasks/shared/task.service';
 
 // modules imports
 import { AppRoutingModule } from './app-routing.module';
 
-// in memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryTaskDataService } from './in-memory-task-data.service';
+//angular plugins imports
 
-//jquery plugins
-import * as $ from 'jquery';
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+      ngModule: Type<T>;
+      providers?: Provider[];
+  }
+}
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     NavbarComponent,
+    SignInFormComponent,
+    SignUpFormComponent,
     TasksComponent,
     TaskDetailComponent,
     TaskSearchComponent
@@ -40,9 +50,11 @@ import * as $ from 'jquery';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [
+    AuthService,
     TaskService
   ],
   bootstrap: [AppComponent]
