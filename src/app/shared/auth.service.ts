@@ -8,6 +8,8 @@ import { User } from "./user.model";
 @Injectable()
 
 export class AuthService{
+  tokenService: any;
+
   public constructor(){}
 
   public signUp(user: User){
@@ -21,8 +23,8 @@ export class AuthService{
 
   }
 
-  public isSignedIn(){
-
+  public userSignedIn(){
+    return this.tokenService.userSignedIn()
   }
 
   private handleErrors(handleErros: Response) {

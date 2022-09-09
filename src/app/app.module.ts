@@ -21,6 +21,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AuthService } from './shared/auth.service';
 import { TaskService } from './tasks/shared/task.service';
 
+//guard imports
+import { AuthGuard } from './guards/auth.guard';
+
 // modules imports
 import { AppRoutingModule } from './app-routing.module';
 
@@ -32,6 +35,7 @@ declare module "@angular/core" {
       providers?: Provider[];
   }
 }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,9 +58,12 @@ declare module "@angular/core" {
     BsDatepickerModule.forRoot()
   ],
   providers: [
+    AuthGuard,
     AuthService,
     TaskService
   ],
+  
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
