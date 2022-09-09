@@ -2,20 +2,19 @@ import { Injectable } from "@angular/core";
 import { HttpResponse } from "@angular/common/http";
 
 import { Observable, throwError } from "rxjs";
-import { Angular2TokenService } from "angular2-token";
 
 import { User } from "./user.model";
 
 @Injectable()
 
 export class AuthService{
-  public constructor(private tokenService: Angular2TokenService){}
+  public constructor(){}
 
   public signUp(user: User){
-    
+
   }
   public signIn(uid: string, password:string){
-    
+
   }
 
   public signOut(){
@@ -23,7 +22,7 @@ export class AuthService{
   }
 
   public isSignedIn(){
-    
+
   }
 
   private handleErrors(handleErros: Response) {

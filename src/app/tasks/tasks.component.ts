@@ -17,7 +17,7 @@ export class TasksComponent implements OnInit{
 
   // public selectedTask!: Task
   //private taskService: TaskService
-  
+
   public constructor(private taskService: TaskService){
     this.newTask = new Task(null!, '')
   }

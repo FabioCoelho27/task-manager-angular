@@ -25,10 +25,6 @@ import { TaskService } from './tasks/shared/task.service';
 import { AppRoutingModule } from './app-routing.module';
 
 //angular plugins imports
-import { Angular2TokenService } from 'angular2-token';
-
-//jquery plugins
-import * as $ from 'jquery';
 
 declare module "@angular/core" {
   interface ModuleWithProviders<T = any> {
@@ -58,7 +54,6 @@ declare module "@angular/core" {
     BsDatepickerModule.forRoot()
   ],
   providers: [
-    Angular2TokenService,
     AuthService,
     TaskService
   ],
