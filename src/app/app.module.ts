@@ -27,8 +27,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryTaskDataService } from './in-memory-task-data.service';
 
+//angular plugins imports
+import { Angular2TokenService } from 'angular2-token';
+
 //jquery plugins
 import * as $ from 'jquery';
+
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+      ngModule: Type<T>;
+      providers?: Provider[];
+  }
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +62,7 @@ import * as $ from 'jquery';
     BsDatepickerModule.forRoot()
   ],
   providers: [
+    Angular2TokenService,
     TaskService
   ],
   bootstrap: [AppComponent]
