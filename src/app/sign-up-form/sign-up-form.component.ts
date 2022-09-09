@@ -17,7 +17,10 @@ export class SignUpFormComponent{
       email:[null, [Validators.required, Validators.email]],
       password:[null, [Validators.required, Validators.minLength(6)]],
       passwordConfirmation:[null, Validators.required]
-    })
+      
+    },
+    
+    )
     this.formUtils = new FormUtils(this.form)
   }
 
