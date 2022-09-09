@@ -18,14 +18,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // services imports
+import { AuthService } from './shared/auth.service';
 import { TaskService } from './tasks/shared/task.service';
 
 // modules imports
 import { AppRoutingModule } from './app-routing.module';
-
-// in memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryTaskDataService } from './in-memory-task-data.service';
 
 //angular plugins imports
 import { Angular2TokenService } from 'angular2-token';
@@ -57,12 +54,12 @@ declare module "@angular/core" {
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(InMemoryTaskDataService),
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot()
   ],
   providers: [
     Angular2TokenService,
+    AuthService,
     TaskService
   ],
   bootstrap: [AppComponent]
