@@ -1,1 +1,28 @@
-<h1>I'm here</h1>
+<h1 class="page-header">Login</h1>
+<form [formGroup]="form" (ngSubmit)="signInUser()">
+  <div class="mb-3 has-feedback" [ngClass]="formUtils.fieldClassForErrorOrSuccess('email')">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('email')" style="margin-right:20px" ></span>
+
+
+    <div *ngIf="formUtils.showFieldError('email')" class="text-danger">
+      <div *ngIf="form.get('email')?.errors">O email é obrigatório</div>
+      <div *ngIf="form.get('email')?.errors">O email digitado é inválido</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="password" formControlName="password">
+
+    <span class="form-control-feedback" [ngClass]="formUtils.iconClassErrorOrSuccess('email')" style="margin-right:20px" ></span>
+
+    <div *ngIf="formUtils.showFieldError('password')" class="text-danger">
+      <div *ngIf="form.get('password')?.errors">A senha é obrigatória</div>
+    </div>
+  </div>
+
+  <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Fazer Login</button>
+</form>
