@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SignInFormComponent } from './sign-in-form/sign-in-form.component';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './tasks/task-detail/task-detail.component';
@@ -27,6 +28,10 @@ const ROUTES = RouterModule.forRoot([
   {
     path: 'sign-up',
     component: SignUpFormComponent
+  },
+  {
+    path: 'sign-in',
+    component: SignInFormComponent
   }
 ])
 
