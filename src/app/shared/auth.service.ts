@@ -1,19 +1,20 @@
 import { Injectable } from "@angular/core";
 import { HttpResponse } from "@angular/common/http";
 
-import { Observable, throwError } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 
 import { User } from "./user.model";
 
 @Injectable()
 
 export class AuthService{
-  tokenService: any;
 
-  public constructor(){}
+  public constructor(private tokenService: AuthService){}
+  
 
   public signUp(user: User){
-
+    return this.tokenService.registerAccount(user as any)
+    .pipe(catchError(this.handleErrors))
   }
   public signIn(uid: string, password:string){
 
@@ -23,8 +24,8 @@ export class AuthService{
 
   }
 
-  public userSignedIn(){
-    return this.tokenService.userSignedIn()
+  public userSignedIn(uid: string, password: string){
+    
   }
 
   private handleErrors(handleErros: Response) {
