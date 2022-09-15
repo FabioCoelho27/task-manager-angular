@@ -49,17 +49,13 @@ export class TaskService{
       )
   }
 
-  public update(task: Task): Observable<any> {
-    let url = `${this.tasksUrl}/${task.id}`
-    let body = JSON.stringify(task)
+  public update(task: Task): Observable<Task> {
+    let url = `${this.tasksUrl}/${task.id}`;
 
-    return this.http.put(url,body, {headers: this.headers})
+    return this.http.put(url, task, {headers: this.headers})
       .pipe(
-        catchError(this.handleErrors),
-        map((response) => {
-        console.log(response);
-        return response;
-       })
+        map(() => task),
+        catchError(this.handleErrors)
       )
   }
 
@@ -82,8 +78,11 @@ export class TaskService{
       )
   }
 
-  private handleErrors(handleErros: Response) {
-    console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", Error)
-    return throwError(Error || 'server Error');
+  private handleErrors(error: any) {
+
+    console.log("Salvando o Erro num arquivo de log - Detalhes do erro =>", error)
+
+    return throwError(error || 'server Error');
+
   }
 }

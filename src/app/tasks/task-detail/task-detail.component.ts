@@ -33,7 +33,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
 
 
     this.form = this.formBuilder.group({
-      id: [null],
+      
       title: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(255)]],
       deadline: [null, Validators.required],
       done: [null],
@@ -76,15 +76,17 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
   }
 
   public update(){
-    if(this.task!.title){
-      alert("A tarefa deve ter um título")
-    }else{
-      this.taskService.update(this.task!)
+    
+    this.task!.title = this.form.get('title')!.value;
+    this.task!.deadline = this.form.get('deadline')!.value;
+    this.task!.description = this.form.get('description')!.value;
+    this.task!.done = this.form.get('done')!.value;
+
+    this.taskService.update(this.task!)
       .subscribe(
-        () => alert("Tarefa atualizada com sucesso"),
-        () => alert("Occoreu um erro no servidor, só entro no segundo alert")
+        () => alert("Tarefa atualizada com sucesso!"),
+        () => alert("Ocorreu um erro no servidor, try mais tarde.")
       )
-    }
   }
 
 }
