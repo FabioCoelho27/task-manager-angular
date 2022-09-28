@@ -14,29 +14,38 @@
         <div *ngIf="form.get('title')?.errors">O título deve ter no máximo 255 caracteres</div>
       </div>
     </div>
-    <div class="form-group col-md-3">
-      <label for="deadline" class="control-label">Prazo de Entrega</label>
-      <input type="text" placeholder="Datepicker" formControlName="deadline" id="deadline" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true }" >
+
+    <div class="form-group col-md-3 has-feedback"[ngClass]="formUtils.fieldClassForErrorOrSuccess('deadline')">
+      <label for="title" class="control-label">Prazo de Entrega</label>
+      <input  [(ngModel)]="task!.deadline"  placeholder="Datepicker" formControlName="deadline" id="deadline" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', isAnimated: true }">
     </div>
+
+
     <div class="form-group col-md-3">
       <label for="done" class="control-label">Situação</label>
       <select class="form-control" id="done">
         <option *ngFor="let option of taskDoneOptions" [value]="option.value">{{ option.text }}</option>
       </select>
     </div>
+
+    <div class="form-group col-md-12 has-feedback"[ngClass]="formUtils.fieldClassForErrorOrSuccess('title')">
+      <label for="description" class="control-label">Descrição</label>
+      <textarea  [(ngModel)]="task!.description"  formControlName="description" id="description" class="form-control" rows="4">
+    </div>
+
+
     <div class="row">
       <div class="form-group col-md-12">
         <label for="description" class="control-label">Descrição detalhada</label>
         <textarea [(ngModel)]="task!.description"  class="form-control" name="description" id="description"  rows="4"></textarea>
       </div>
     </div>
-  </div>
 
 </form>
 
 
-<div>
-  <button class="btn btn-danger" (click)="goBack()">Voltar</button>
+<div style="margin-top: 10px; ">
+  <button class="btn btn-danger ed" (click)="goBack()">Voltar</button>
   <button type="submit" class="btn btn-success" (click)="update()">Atualizar</button>
 </div>
 

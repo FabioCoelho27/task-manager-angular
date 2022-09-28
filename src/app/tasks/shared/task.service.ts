@@ -10,7 +10,10 @@ import { Task } from "./task.model";
 @Injectable()
 
 export class TaskService{
-  public tasksUrl = "api/tasks"
+  search(term: string): any {
+    throw new Error("Method not implemented.");
+  }
+  public tasksUrl = "http://localhost:4000/tasks"
   public headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   public constructor(private http: HttpClient) {}
@@ -52,7 +55,7 @@ export class TaskService{
   public update(task: Task): Observable<Task> {
     let url = `${this.tasksUrl}/${task.id}`;
 
-    return this.http.put(url, task, {headers: this.headers})
+    return this.http.patch(url, task, {headers: this.headers})
       .pipe(
         map(() => task),
         catchError(this.handleErrors)
@@ -68,15 +71,15 @@ export class TaskService{
         map(() => null!)
       )
   }
-  public searchByTitle(term: string): Observable<Task[]> {
-    let url = `${this.tasksUrl}?title=${term}`;
+  // public searchByTitle(term: string): Observable<Task[]> {
+  //   let url = `${this.tasksUrl}?title=${term}`;
 
-    return this.http.get(url)
-      .pipe(
-        catchError(this.handleErrors),
-        map((response: any) => response.json().data as Task[])
-      )
-  }
+  //   return this.http.get(url)
+  //     .pipe(
+  //       catchError(this.handleErrors),
+  //       map((response: any) => response.json as Task[])
+  //     )
+  // }
 
   private handleErrors(error: any) {
 

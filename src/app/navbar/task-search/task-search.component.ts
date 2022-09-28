@@ -12,23 +12,27 @@ import { switchMap} from 'rxjs/operators';
   templateUrl: './task-search.component.html'
 })
 
-export class TaskSearchComponent implements OnInit{
-  public searchTerms: Subject<string> = new Subject();
-  public tasks: Task[] = [];
+export class  implements OnInit{
+  // public searchTerms: Subject<string> = new Subject();
+  // public tasks: Task[] = [];
 
-  public constructor(private taskService: TaskService, private router: Router){}
+  // public constructor(private taskService: TaskService, private router: Router){}
 
-  public ngOnInit() {
-    this.searchTerms.pipe(switchMap(
-      term => term ? this.taskService.searchByTitle(term) : new Observable<Task[]>)
-    ).subscribe(tasks => console.log(tasks))
-  }
+  // public ngOnInit() {
+  //   this.searchTerms
 
-  public search(term: string){
-    this.searchTerms.next(term);
-  }
-  public gotoTask(task: Task) {
-    this.tasks = [],
-    this.router.navigate(['/tasks', task.id])
-  }
+  //     .pipe(switchMap(
+  //       (term: string) => term ? this.taskService.searchByTitle(term) : of<Task[]>([])
+  //     ))
+  //     .subscribe((tasks: Task[]) => this.tasks = tasks)
+  // }
+
+  // public search(term: string) {
+  //   this.searchTerms.next(term);
+  // }
+  
+  // public gotoTask(task: Task) {
+  //   this.tasks = [],
+  //   this.router.navigate(['/tasks', task.id])
+  // }
 }

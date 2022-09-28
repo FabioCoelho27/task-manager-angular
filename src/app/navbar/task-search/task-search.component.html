@@ -1,7 +1,7 @@
 <form class="d-flex">
-  <input class="form-control me-2" type="search" placeholder="Busca de tarefas" aria-label="Search">
+  <input #searchInput type="text" (keyup)="search(searchInput.value)" class="form-control" placeholder="Busca de tarefas">
 </form>
-<div class="list-group" style="position: absolute; width: 20%; top: 50px">
+<div *ngIf="tasks"  class="list-group" style="position: absolute; width: 20%; top: 50px">
     <a *ngFor="let task of tasks"(click)="gotoTask(task)" class="list-group-item list-group-item-action active" style="cursor: pointer" aria-current="true">
       {{task.title}}
     </a>

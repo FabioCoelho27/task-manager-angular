@@ -42,7 +42,6 @@ export class TasksComponent implements OnInit{
       this.taskService.create(this.newTask)
       .subscribe(
         (task) =>{
-          console.log("Passou")
           this.tasks?.push(task);
           this.newTask = new Task(null!, '') //zerar o campo depois de criar uma nova tarefa.
         },
